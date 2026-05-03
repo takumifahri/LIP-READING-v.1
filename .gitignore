@@ -1,0 +1,48 @@
+# ============ VIRTUAL ENVIRONMENT ============
+.venv/
+venv/
+env/
+bin/
+lib/
+include/
+share/
+
+# ============ PYTHON / IDE ============
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ============ JUPYTER NOTEBOOK ============
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# ============ DATASET (PENTING!) ============
+# Abaikan video mentah karena ukurannya sangat besar
+lip_reading_data/words/*/videos/*.mp4
+lip_reading_data/words/*/lips/
+lip_reading_data/words/*/landmarks/
+
+# Jika kamu ingin mengabaikan seluruh folder data (pilih salah satu)
+# lip_reading_data/
+
+# ============ PROCESSED DATA & MODELS ============
+# Abaikan file NumPy hasil ekstraksi (biasanya besar)
+processed_data/*.npy
+processed_data/*.npz
+
+# Abaikan file model (weights) karena ukurannya besar
+models/*.h5
+models/*.task
+*.task
+
+# ============ LOGS & TEMP ============
+logs/
+*.log
+temp/
+*.zip
+*.rar
