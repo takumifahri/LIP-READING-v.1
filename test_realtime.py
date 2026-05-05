@@ -9,11 +9,17 @@ from collections import deque
 import os
 
 # 1. KONFIGURASI
-# Menggunakan nama model terbaru yang ada di folder models
-MODEL_FILENAME = "model_20260503_091431.h5"
+# Gunakan model hasil training terbaru
+MODEL_FILENAME = "lip_reading_model.h5"
 MODEL_PATH = os.path.join("models", MODEL_FILENAME)
+
+# Fix untuk error Qt di Linux/Wayland
+os.environ["QT_QPA_PLATFORM"] = "xcb"
 LABEL_MAP_PATH = "processed_data/label_map.json"
 FACE_LANDMARKER_TASK = "face_landmarker.task"
+MOVEMENT_THRESHOLD = 0.05  # Sensitivitas gerakan (0.05 - 0.15)
+PREDICTION_STABILITY_THRESHOLD = 3  # Berapa kali kata harus muncul berturut-turut agar ditampilkan
+CONFIDENCE_THRESHOLD = 0.75  # Tingkat keyakinan minimal model (0.0 - 1.0)
 
 # Indeks bibir MediaPipe
 LIP_INDICES = [
@@ -45,7 +51,9 @@ detector = vision.FaceLandmarker.create_from_options(options)
 
 # 4. REAL-TIME PREDICTION
 cap = cv2.VideoCapture(0)
-sequence = deque(maxlen=90) # Kita pakai 90 frame (3 detik) sesuai data training
+sequence = deque(maxlen=90)
+results_buffer = deque(maxlen=PREDICTION_STABILITY_THRESHOLD) # Antrian untuk stabilisasi prediksi
+last_stable_word = "..." # Menyimpan kata terakhir yang stabil
 
 print("\n🚀 Real-time Testing Dimulai!")
 print("Instruksi: Gerakkan bibirmu di depan kamera. Prediksi akan muncul setelah 3 detik awal.")
@@ -89,18 +97,42 @@ while cap.isOpened():
 
     # Jika antrian sudah penuh, mulai prediksi
     if len(sequence) == 90:
-        input_data = np.expand_dims(list(sequence), axis=0)
-        prediction = model.predict(input_data, verbose=0)
-        predicted_idx = np.argmax(prediction)
-        confidence = np.max(prediction)
+        # --- CEK APAKAH BIBIR BERGERAK ---
+        # Hitung standar deviasi gerakan dalam sequence
+        movement_amount = np.std(np.array(sequence))
         
-        word = target_names[predicted_idx]
+        if movement_amount > MOVEMENT_THRESHOLD:
+            input_data = np.expand_dims(list(sequence), axis=0)
+            prediction = model.predict(input_data, verbose=0)
+            predicted_idx = np.argmax(prediction)
+            confidence = np.max(prediction)
+            word = target_names[predicted_idx]
+            
+            # Masukkan hasil ke buffer untuk stabilisasi
+            if confidence > CONFIDENCE_THRESHOLD:
+                results_buffer.append(word)
+            
+            # Cek apakah buffer sudah konsisten menebak kata yang sama
+            if len(results_buffer) >= PREDICTION_STABILITY_THRESHOLD:
+                # Ambil kata yang paling sering muncul di buffer
+                most_common = max(set(results_buffer), key=list(results_buffer).count)
+                if list(results_buffer).count(most_common) >= PREDICTION_STABILITY_THRESHOLD:
+                    last_stable_word = most_common
+            
+            color = (0, 255, 0) if confidence > CONFIDENCE_THRESHOLD else (0, 0, 255)
+            text = f"KATA: {last_stable_word.upper()} ({confidence*100:.1f}%)"
+        else:
+            text = "STATUS: DIAM / IDLE"
+            results_buffer.clear() # Reset buffer saat diam
+            last_stable_word = "..."
+            color = (255, 255, 0)
         
-        # UI Feedback
-        color = (0, 255, 0) if confidence > 0.6 else (0, 0, 255)
-        text = f"KATA: {word.upper()} ({confidence*100:.1f}%)"
-        cv2.rectangle(display_frame, (10, 20), (500, 70), (0,0,0), -1) # Background text
+        cv2.rectangle(display_frame, (10, 20), (550, 70), (0,0,0), -1) # Background text
         cv2.putText(display_frame, text, (20, 55), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
+        
+        # Tampilkan info movement untuk debugging (bisa dihapus nanti)
+        cv2.putText(display_frame, f"Move: {movement_amount:.4f}", (20, 100), 
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 1)
     else:
         # Progress bar untuk mengumpulkan frame awal
         progress = int((len(sequence) / 90) * 100)
