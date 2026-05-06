@@ -1,0 +1,27 @@
+               precision    recall  f1-score   support
+
+  antek-antek       1.00      0.75      0.86         4
+        asing       0.75      1.00      0.86         3
+    berbicara       0.67      0.50      0.57         4
+         buka       1.00      1.00      1.00         3
+         buku       1.00      1.00      1.00         2
+   komunikasi       1.00      1.00      1.00         3
+   meletakkan       1.00      1.00      1.00         4
+      membawa       0.60      1.00      0.75         3
+  memperbaiki       1.00      0.67      0.80         3
+    mengambil       1.00      0.75      0.86         4
+     mengirim       1.00      1.00      1.00         4
+      menulis       1.00      0.67      0.80         3
+    menyimpan       1.00      1.00      1.00         3
+    pemahaman       0.60      0.75      0.67         4
+ pembelajaran       0.75      0.75      0.75         4
+pemberitahuan       1.00      1.00      1.00         4
+    perbaikan       1.00      1.00      1.00         3
+        pintu       0.75      1.00      0.86         3
+ transformasi       1.00      1.00      1.00         3
+        tulis       1.00      1.00      1.00         3
+        tutup       1.00      1.00      1.00         3
+
+     accuracy                           0.89        70
+    macro avg       0.91      0.90      0.89        70
+ weighted avg       0.91      0.89      0.89        70
