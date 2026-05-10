@@ -7,20 +7,37 @@ import os
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.model_selection import train_test_split
 
+import sys
+
 # --- KONFIGURASI ---
 DATA_PATH = "processed_data/X_data.npy"
 LABEL_PATH = "processed_data/y_data.npy"
 MAP_PATH = "processed_data/label_map.json"
-MODEL_PATH = "models/lip_reading_model.h5"
 REPORT_DIR = "reports"
 
+# Default model jika tidak ada argumen
+DEFAULT_MODEL = "models/lip_reading_aug.h5"
+
 def evaluate():
+    # Pilih model berdasarkan argumen (e.g., python evaluate_model.py base)
+    if len(sys.argv) > 1:
+        model_type = sys.argv[1].lower()
+        if model_type == "base":
+            model_path = "models/lip_reading_base.h5"
+        elif model_type == "aug":
+            model_path = "models/lip_reading_aug.h5"
+        else:
+            model_path = sys.argv[1] # Jika path manual diberikan
+    else:
+        model_path = DEFAULT_MODEL
+
+    print(f"🔍 Evaluating Model: {model_path}")
     # 1. Cek folder laporan
     os.makedirs(REPORT_DIR, exist_ok=True)
 
     # 2. Load Data & Model
-    if not os.path.exists(MODEL_PATH):
-        print(f"Error: Model {MODEL_PATH} tidak ditemukan!")
+    if not os.path.exists(model_path):
+        print(f"Error: Model {model_path} tidak ditemukan!")
         return
 
     X = np.load(DATA_PATH)
@@ -33,7 +50,7 @@ def evaluate():
     target_names = [word for word, idx in sorted(label_map.items(), key=lambda item: item[1])]
     
     print("⌛ Loading Model...")
-    model = tf.keras.models.load_model(MODEL_PATH)
+    model = tf.keras.models.load_model(model_path)
 
     # 3. Split Data (Samakan dengan train_model.py agar adil)
     _, X_test, _, y_test = train_test_split(

@@ -11,7 +11,7 @@ import json
 DATA_PATH = "processed_data/X_data.npy"
 LABEL_PATH = "processed_data/y_data.npy"
 MAP_PATH = "processed_data/label_map.json"
-MODEL_SAVE_PATH = "models/lip_reading_model.h5"
+MODEL_SAVE_PATH = "models/lip_reading_base.h5"
 
 def train():
     # 1. Load Data

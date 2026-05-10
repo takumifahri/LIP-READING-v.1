@@ -32,12 +32,12 @@ lip_reading_data/words/*/landmarks/
 
 # ============ PROCESSED DATA & MODELS ============
 # Abaikan file NumPy hasil ekstraksi (biasanya besar)
-processed_data/*.npy
-processed_data/*.npz
+# processed_data/*.npy
+# processed_data/*.npz
 
 # Abaikan file model (weights) karena ukurannya besar
-models/*.h5
-models/*.task
+# models/*.h5
+# models/*.task
 *.task
 
 # ============ LOGS & TEMP ============
