@@ -7,11 +7,12 @@ import os
 from pathlib import Path
 from tqdm import tqdm
 import json
+from config import VIDEOS_DIR
 
 # ==========================================
 # KONFIGURASI
 # ==========================================
-DATASET_DIR = Path("lip_reading_data/words")
+DATASET_DIR = Path(VIDEOS_DIR)
 OUTPUT_DIR = Path("processed_data")
 OUTPUT_DIR.mkdir(exist_ok=True)
 MODEL_PATH = 'face_landmarker.task'

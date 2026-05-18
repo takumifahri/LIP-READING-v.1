@@ -7,13 +7,13 @@ import tensorflow as tf
 import json
 from collections import deque
 import os
-
-# 1. KONFIGURASI
-MODEL_FILENAME = "lip_reading_model.h5"
-MODEL_PATH = os.path.join("models", MODEL_FILENAME)
+from config import MODEL_DEFAULT, LABEL_MAP_PATH, REPORTS_DIR
 
 os.environ["QT_QPA_PLATFORM"] = "xcb"
-LABEL_MAP_PATH = "processed_data/label_map.json"
+
+# Gunakan konfigurasi dari config.py
+MODEL_PATH = MODEL_DEFAULT
+LABEL_MAP_PATH = LABEL_MAP_PATH
 FACE_LANDMARKER_TASK = "face_landmarker.task"
 
 # --- AMBANG BATAS BARU ---

@@ -1,0 +1,16 @@
+==================================================
+TRAINING METRICS - AUGMENTED MODEL (V3 with Callbacks)
+==================================================
+
+Data: processed_data/X_data_aug.npy
+Model: models/lip_reading_aug.h5
+Train videos (original): 280
+Train samples (augmented): 1400
+Val samples: 70
+Number of classes: 21
+Augmentations per video: 5
+Final Train Accuracy: 0.9171
+Final Val Accuracy: 0.8857
+Final Train Loss: 0.2935
+Final Val Loss: 0.3969
+Total Epochs Trained: 73

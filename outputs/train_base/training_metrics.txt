@@ -1,0 +1,13 @@
+==================================================
+TRAINING METRICS - BASE MODEL (NON-AUGMENTED)
+==================================================
+
+Data: processed_data/X_data.npy
+Model: models/lip_reading_base.h5
+Train samples: 280
+Test samples: 70
+Number of classes: 21
+Final Train Accuracy: 0.9357
+Final Val Accuracy: 0.8571
+Final Train Loss: 0.2027
+Final Val Loss: 0.4417

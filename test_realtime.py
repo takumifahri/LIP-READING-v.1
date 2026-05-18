@@ -7,15 +7,15 @@ import tensorflow as tf
 import json
 from collections import deque
 import os
+from config import MODEL_DEFAULT, LABEL_MAP_PATH
 
 # 1. KONFIGURASI
 # Gunakan model hasil training terbaru
-MODEL_FILENAME = "lip_reading_model.h5"
-MODEL_PATH = os.path.join("models", MODEL_FILENAME)
+MODEL_PATH = MODEL_DEFAULT
 
 # Fix untuk error Qt di Linux/Wayland
 os.environ["QT_QPA_PLATFORM"] = "xcb"
-LABEL_MAP_PATH = "processed_data/label_map.json"
+LABEL_MAP_PATH = LABEL_MAP_PATH
 FACE_LANDMARKER_TASK = "face_landmarker.task"
 MOVEMENT_THRESHOLD = 0.05  # Sensitivitas gerakan (0.05 - 0.15)
 PREDICTION_STABILITY_THRESHOLD = 3  # Berapa kali kata harus muncul berturut-turut agar ditampilkan

@@ -8,13 +8,13 @@ import json
 from collections import deque
 import os
 import time
+from config import MODEL_DEFAULT, LABEL_MAP_PATH
 
 # ==========================================
 # 1. KONFIGURASI & AMBANG BATAS (V4 - Smart Trigger)
 # ==========================================
-MODEL_FILENAME = "lip_reading_model.h5"
-MODEL_PATH = os.path.join("models", MODEL_FILENAME)
-LABEL_MAP_PATH = "processed_data/label_map.json"
+MODEL_PATH = MODEL_DEFAULT
+LABEL_MAP_PATH = LABEL_MAP_PATH
 FACE_LANDMARKER_TASK = "face_landmarker.task"
 
 # --- AMBANG BATAS ---

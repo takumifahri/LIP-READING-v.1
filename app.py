@@ -5,14 +5,14 @@ import tensorflow as tf
 import numpy as np
 import json
 import os
+from config import API_TITLE, API_VERSION, API_MODEL_PATH, LABEL_MAP_PATH
 
 # ==========================================
 # 1. KONFIGURASI & LOAD MODEL
 # ==========================================
-MODEL_PATH = "models/lip_reading_aug.h5"
-LABEL_MAP_PATH = "processed_data/label_map.json"
+MODEL_PATH = API_MODEL_PATH
 
-app = FastAPI(title="Lip Reading API", version="1.0")
+app = FastAPI(title=API_TITLE, version=API_VERSION)
 
 # Izinkan CORS (Supaya bisa diakses dari Frontend JS/React/Vue)
 app.add_middleware(
