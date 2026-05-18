@@ -5,12 +5,13 @@ import tensorflow as tf
 import numpy as np
 import json
 import os
-from config import API_TITLE, API_VERSION, API_MODEL_PATH, LABEL_MAP_PATH
+from config import API_TITLE, API_VERSION, MODEL_AUG, LABEL_MAP_PATH
 
 # ==========================================
 # 1. KONFIGURASI & LOAD MODEL
 # ==========================================
-MODEL_PATH = API_MODEL_PATH
+MODEL_PATH = MODEL_AUG
+MODEL_LABEL = "aug"
 
 app = FastAPI(title=API_TITLE, version=API_VERSION)
 
@@ -32,7 +33,7 @@ async def load_resources():
     if not os.path.exists(MODEL_PATH):
         raise RuntimeError(f"Model {MODEL_PATH} tidak ditemukan!")
     
-    print("⌛ Loading model into memory...")
+    print(f"⌛ Loading {MODEL_LABEL} model into memory: {MODEL_PATH}")
     model = tf.keras.models.load_model(MODEL_PATH)
     
     with open(LABEL_MAP_PATH, 'r') as f:
@@ -90,7 +91,12 @@ def predict_lip_reading(request: PredictionRequest):
 
 @app.get("/")
 def home():
-    return {"message": "Lip Reading API is running!", "model_status": "ready" if model else "loading"}
+    return {
+        "message": "Lip Reading API is running!",
+        "model_status": "ready" if model else "loading",
+        "model_label": MODEL_LABEL,
+        "model_path": MODEL_PATH,
+    }
 
 if __name__ == "__main__":
     import uvicorn
