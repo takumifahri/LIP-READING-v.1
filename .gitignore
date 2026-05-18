@@ -40,6 +40,10 @@ models/*.h5
 models/*.task
 *.task
 
+# Abaikan output training/evaluasi lokal
+outputs/
+reports/
+
 # ============ LOGS & TEMP ============
 logs/
 *.log
