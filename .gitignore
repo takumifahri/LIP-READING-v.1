@@ -30,13 +30,12 @@ lip_reading_data/words/*/landmarks/
 # Jika kamu ingin mengabaikan seluruh folder data (pilih salah satu)
 # lip_reading_data/
 
-# ============ PROCESSED DATA & MODELS ============
+# ============ PROCESSED DATA ============
 # Abaikan file NumPy hasil ekstraksi (biasanya besar)
 processed_data/*.npy
 processed_data/*.npz
 
-# Abaikan file model (weights) karena ukurannya besar
-models/*.h5
+# Model .h5 sengaja tidak di-ignore karena ukurannya kecil dan dipakai deploy.
 models/*.task
 *.task
 
