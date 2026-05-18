@@ -27,5 +27,9 @@ pyyaml>=6.0
 python-dotenv>=1.0.0
 scipy>=1.10.0
 
+# API Runtime
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
 # Optional: Audio processing (if needed later)
 librosa>=0.10.0

@@ -1,0 +1,23 @@
+services:
+  lip-reading-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lip-reading-api
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      TF_CPP_MIN_LOG_LEVEL: "2"
+      CUDA_VISIBLE_DEVICES: "-1"
+      PYTHONUNBUFFERED: "1"
+    volumes:
+      - ./models:/app/models:ro
+      - ./processed_data:/app/processed_data:ro
+      - ./reports:/app/reports
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/', timeout=5).read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
