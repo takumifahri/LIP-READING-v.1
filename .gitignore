@@ -31,9 +31,7 @@ lip_reading_data/words/*/landmarks/
 # lip_reading_data/
 
 # ============ PROCESSED DATA ============
-# Abaikan file NumPy hasil ekstraksi (biasanya besar)
-processed_data/*.npy
-processed_data/*.npz
+# File NumPy processed_data sengaja masuk Git lewat Git LFS.
 
 # Model .h5 sengaja tidak di-ignore karena ukurannya kecil dan dipakai deploy.
 models/*.task
