@@ -11,7 +11,7 @@ from config import (
 )
 
 # Default model jika tidak ada argumen
-DEFAULT_MODEL = MODEL_BASE
+DEFAULT_MODEL = MODEL_AUG
 
 
 def parse_args():

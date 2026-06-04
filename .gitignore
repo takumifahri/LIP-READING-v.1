@@ -47,3 +47,6 @@ logs/
 temp/
 *.zip
 *.rar
+
+# Backup
+*/backup/
